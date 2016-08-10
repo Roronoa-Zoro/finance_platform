@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+       http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+    <dubbo:application name="finance-app"/>
+
+    <dubbo:registry address="zookeeper://127.0.0.1:2181"/>
+
+    <dubbo:protocol contextpath="/finance_platform/api" name="rest" port="8088"  server="tomcat"/>
+    
+    <!-- consumer start -->
+    <dubbo:reference 
+        id="trxClient" 
+        timeout="100000"
+        interface="com.lp.transaction.client.api.TransactionClient"
+        check="false"
+        />
+        
+    <dubbo:reference 
+        id="accountApi" 
+        timeout="100000"
+        interface="com.lp.account.client.api.AccountApi"
+        check="false"
+        />
+    <!-- consumer end -->
+        
+    <!-- provider start -->
+    <dubbo:service interface="com.lp.finance.platform.rest.FinanceApi" ref="defaultFinanceApi" protocol="rest"/>
+    
+    <dubbo:service interface="com.lp.finance.platform.rest.EchoApi" ref="defaultEchoApi" protocol="rest"/>
+	<!-- provider end -->
+</beans>
