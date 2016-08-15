@@ -112,11 +112,7 @@ public class FinanceServiceImpl extends SuperServiceImpl<FinanceMapper, FinanceE
 		RequestDetail detail = new RequestDetail();
 		detail.setAccId(vo.getAccId());
 		detail.setAmount(vo.getAmount());
-		if (vo.getAmount().compareTo(BigDecimal.valueOf(0L)) > 0) {
-			detail.setOperateType(OperationType.Plus.getType());
-		} else {
-			detail.setOperateType(OperationType.Minus.getType());
-		}
+		detail.setOperateType(OperationType.Minus.getType());
 		list.add(detail);
 		
 		boolean res = accountApi.operateAccountRequest(r);
