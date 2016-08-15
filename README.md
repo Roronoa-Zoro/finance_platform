@@ -1,1 +1,2 @@
-# finance_platform
+sample
+简单模拟购买，然后调用账户系统(account_platform)生成流水
